@@ -109,5 +109,11 @@ namespace Client
             byte[] messageBytes = Encoding.UTF8.GetBytes(jsonMessage);
             _clientSocket.Send(messageBytes);
         }
+        private string ReceiveMessage()
+        {
+            byte[] buffer = new byte[10485760];
+            int bytesReceived = _clientSocket.Receive(buffer);
+            return Encoding.UTF8.GetString(buffer, 0, bytesReceived);
+        }
     }
 }
