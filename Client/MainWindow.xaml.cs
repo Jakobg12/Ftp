@@ -131,5 +131,26 @@ namespace Client
                 MessageBox.Show(viewModelMessage.Data);
             }
         }
+        private void LstDirectories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstDirectories.SelectedItem != null)
+            {
+                string selectedDirectory = lstDirectories.SelectedItem.ToString();
+                string message = $"cd {selectedDirectory}";
+                SendMessage(message);
+                string response = ReceiveMessage();
+                var viewModelMessage = JsonConvert.DeserializeObject<ViewModelMessage>(response);
+                if (viewModelMessage.Command == "cd")
+                {
+                    var files = JsonConvert.DeserializeObject<List<string>>(viewModelMessage.Data);
+                    lstFiles.ItemsSource = files;
+                }
+                else
+                {
+                    MessageBox.Show(viewModelMessage.Data);
+                }
+            }
+        }
+
     }
 }
