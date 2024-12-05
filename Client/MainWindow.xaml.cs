@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace Client
 {
@@ -100,6 +101,13 @@ namespace Client
             {
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
+        }
+        private void SendMessage(string message)
+        {
+            var viewModelSend = new ViewModelSend(message, Id);
+            string jsonMessage = JsonConvert.SerializeObject(viewModelSend);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(jsonMessage);
+            _clientSocket.Send(messageBytes);
         }
     }
 }
