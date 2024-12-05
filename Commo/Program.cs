@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    internal class Program
+    public static List<User> Users = new List<User>();
+    public static IPAddress IAddress;
+    public static int Port;
+    public class Program
     {
         static void Main(string[] args)
         {
