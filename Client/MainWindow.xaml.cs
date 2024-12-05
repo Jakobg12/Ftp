@@ -115,5 +115,21 @@ namespace Client
             int bytesReceived = _clientSocket.Receive(buffer);
             return Encoding.UTF8.GetString(buffer, 0, bytesReceived);
         }
+        private void LoadDirectories()
+        {
+            string message = $"cd";
+            SendMessage(message);
+            string response = ReceiveMessage();
+            var viewModelMessage = JsonConvert.DeserializeObject<ViewModelMessage>(response);
+            if (viewModelMessage.Command == "cd")
+            {
+                var directories = JsonConvert.DeserializeObject<List<string>>(viewModelMessage.Data);
+                lstDirectories.ItemsSource = directories;
+            }
+            else
+            {
+                MessageBox.Show(viewModelMessage.Data);
+            }
+        }
     }
 }
