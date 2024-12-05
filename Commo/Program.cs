@@ -3,7 +3,6 @@ using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -16,7 +15,7 @@ namespace Server
         public static List<User> Users = new List<User>();
         public static IPAddress IpAddress;
         public static int Port;
-        private static string connectionString = "Server=localhost;port=3307;Database=ftp_data;uid=root;pwd=;";
+        private static string connectionString = "Server=192.168.1.249;port=3306;Database=ftp_data;uid=root;pwd=;";
         public static bool AuthenticateUser(string login, string password)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -216,7 +215,7 @@ namespace Server
 
         private static void LogCommandToDatabase(string username, string password, string command)
         {
-            string connectionString = "Server=localhost;port=3307;Database=ftp_data;uid=root;pwd=;";
+            string connectionString = "Server=192.168.1.249;port=3306;Database=ftp_data;uid=root;pwd=;";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
