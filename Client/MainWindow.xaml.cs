@@ -27,6 +27,49 @@ namespace Client
         {
             InitializeComponent();
         }
-
+        public static bool CheckCommand(string message)
+        {
+            bool BCommand = false;
+            string[] DataMessage = message.Split(new string[1] { " " }, StringSplitOptions.None);
+            if (DataMessage.Length > 0)
+            {
+                string Command = DataMessage[0];
+                if (Command == "connect")
+                {
+                    if (DataMessage.Length != 3)
+                    {
+                        MessageBox.Show($"Использование: connect [login] [password]\nПример: connect User1 Asdfg123");
+                        BCommand = false;
+                    }
+                    else
+                    {
+                        BCommand = true;
+                    }
+                }
+                else if (Command == "cd")
+                {
+                    BCommand = true;
+                }
+                else if (Command == "get")
+                {
+                    if (DataMessage.Length == 1)
+                    {
+                        MessageBox.Show($"Использование: get [NameFile]\nПример: get Test.txt");
+                        BCommand = false;
+                    }
+                    else BCommand = true;
+                }
+                else if (Command == "set")
+                {
+                    if (DataMessage.Length == 1)
+                    {
+                        MessageBox.Show("Использование: set [NameFile]\nПример: set Test.txt");
+                        BCommand = false;
+                    }
+                    else BCommand = true;
+                }
+            }
+            return BCommand;
+        }
     }
 }
