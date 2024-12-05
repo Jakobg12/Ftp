@@ -71,5 +71,35 @@ namespace Client
             }
             return BCommand;
         }
+        private void BtnConnect_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string IPAdress = txtIpAddress.Text.ToString();
+                int port = int.Parse(txtPort.Text);
+                string login = txtLogin.Text.ToString();
+                string password = txtPassword.Text.ToString();
+                _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _clientSocket.Connect(IPAdress, port);
+                string message = $"connect {login} {password}";
+                SendMessage(message);
+                string response = ReceiveMessage();
+                var viewModelMessage = JsonConvert.DeserializeObject<ViewModelMessage>(response);
+                if (viewModelMessage.Command == "autorization")
+                {
+                    Id = int.Parse(viewModelMessage.Data);
+                    MessageBox.Show("Connected successfully!");
+                    LoadDirectories();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid login or password.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: " + ex.Message);
+            }
+        }
     }
 }
